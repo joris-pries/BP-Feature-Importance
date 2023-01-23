@@ -48,11 +48,9 @@ This package can be used to determine the Berkelmans-Pries Feature Importance fo
 
 This function is used to determine the Berkelmans-Pries Feature Importance.
 
-
 ```bash
 from bp_feature_importance import bp_feature_importance
 ```
-
 
 #### Input
 
@@ -98,6 +96,22 @@ with output:
 ```
 
 This output is desirable, as $Y$ is the XOR function of $X_0$ and $X_1$
+
+#### Warning
+
+When $Y$ is constant (either immediately or by binning), the feature importance is undefined and NaN is returned with a warning. As example:
+
+```python
+dataset, X_indices, Y_indices = (np.array([[0,0,0], [1,0,0], [0,1,0], [1,1,0]]), [0,1], [2])
+print(bp_feature_importance(dataset, X_indices, Y_indices))
+```
+
+with output
+
+```
+nan
+```
+
 
 ## License
 

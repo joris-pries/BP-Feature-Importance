@@ -4,8 +4,8 @@ import pandas as pd
 import random
 import itertools
 import math
-import concurrent.futures
-import sys
+import warnings
+
 
 from bp_dependency import bin_data, unordered_bp_dependency
 
@@ -29,6 +29,19 @@ def _flatten_and_np_array(list_of_lists):
     Flatten a list of lists and return as numpy array
     """
     return np.asarray(_flatten(list_of_lists))
+
+
+def is_Y_constant(Y_indices, dataset) -> bool:
+    """
+    This function is used to check if Y = dataset[:, Y_indices] is constant, as this leads to a special case for dependency functions.
+    """
+    Y= dataset[:, Y_indices]
+    unique_rows_Y = np.unique(Y, axis = 0)
+    if unique_rows_Y.shape[0] == 1:
+        return True
+    else:
+        return False
+
 
 # %%
 
@@ -218,7 +231,7 @@ class _feature_importance_class:
 
 def bp_feature_importance(dataset, X_indices, Y_indices, binning_indices = None, binning_strategy = 'auto',sequence_strategy = 'exhaustive', stopping_strategy = None, midway_binning = True, print_stats = False):
     """
-    To determine the Berkelmans-Pries Feature Importance (BP-FI)
+    To determine the Berkelmans-Pries Feature Importance (BP-FI). NaN is returned when Y is constant
 
     Args:
     --------
@@ -261,6 +274,9 @@ def bp_feature_importance(dataset, X_indices, Y_indices, binning_indices = None,
         stopping_strategy=stopping_strategy
     )
 
+    if is_Y_constant(bp_class.Y_indices, bp_class.dataset) == True:
+        warnings.warn('Y is constant, so np.NaN is returned')
+        return(np.NaN)
 
     #----Calculate----#
     
@@ -305,7 +321,10 @@ def bp_feature_importance(dataset, X_indices, Y_indices, binning_indices = None,
 
 
 # %%
-# dataset, X_indices, Y_indices = (np.array([[0,0,0], [1,0,1], [0,1,1], [1,1,0]]), [0,1], [2])
-# print(bp_feature_importance(dataset, X_indices, Y_indices))
+dataset, X_indices, Y_indices = (np.array([[0,0,0], [1,0,1], [0,1,1], [1,1,0]]), [0,1], [2])
+print(bp_feature_importance(dataset, X_indices, Y_indices))
 
 #%%
+dataset, X_indices, Y_indices = (np.array([[0,0,0], [1,0,0], [0,1,0], [1,1,0]]), [0,1], [2])
+print(bp_feature_importance(dataset, X_indices, Y_indices))
+# %%
