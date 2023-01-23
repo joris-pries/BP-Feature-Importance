@@ -48,6 +48,12 @@ This package can be used to determine the Berkelmans-Pries Feature Importance fo
 
 This function is used to determine the Berkelmans-Pries Feature Importance.
 
+
+```bash
+from bp_feature_importance import bp_feature_importance
+```
+
+
 #### Input
 
 * `dataset` (array_like): MxK array containing M samples of K variables.
@@ -80,6 +86,7 @@ Let the dataset be given by:
 where each row is as likely to be drawn. We now determine the feature importance values using:
 
 ```python
+import numpy as np
 dataset, X_indices, Y_indices = (np.array([[0,0,0], [1,0,1], [0,1,1], [1,1,0]]), [0,1], [2])
 print(bp_feature_importance(dataset, X_indices, Y_indices))
 ```
@@ -90,7 +97,7 @@ with output:
 {0: 0.5, 1: 0.5}
 ```
 
-This output is desirable, as $Y$ is the XOR function of $X_1$ and $X_2$
+This output is desirable, as $Y$ is the XOR function of $X_0$ and $X_1$
 
 ## License
 
