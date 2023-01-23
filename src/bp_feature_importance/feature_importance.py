@@ -321,10 +321,10 @@ def bp_feature_importance(dataset, X_indices, Y_indices, binning_indices = None,
 
 
 # %%
-dataset, X_indices, Y_indices = (np.array([[0,0,0], [1,0,1], [0,1,1], [1,1,0]]), [0,1], [2])
-print(bp_feature_importance(dataset, X_indices, Y_indices))
+# dataset, X_indices, Y_indices = (np.array([[0,0,0], [1,0,1], [0,1,1], [1,1,0]]), [0,1], [2])
+# print(bp_feature_importance(dataset, X_indices, Y_indices))
 
-#%%
-dataset, X_indices, Y_indices = (np.array([[0,0,0], [1,0,0], [0,1,0], [1,1,0]]), [0,1], [2])
-print(bp_feature_importance(dataset, X_indices, Y_indices))
+# #%%
+# dataset, X_indices, Y_indices = (np.array([[0,0,0], [1,0,0], [0,1,0], [1,1,0]]), [0,1], [2])
+# print(bp_feature_importance(dataset, X_indices, Y_indices))
 # %%
